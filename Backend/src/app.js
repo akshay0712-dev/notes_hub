@@ -8,6 +8,7 @@ const app = express()
 // Allowed origins for CORS
 const allowedOrigins = [
   "http://localhost:5174",
+  "https://notes-hub-inky.vercel.app"
 ];
 
 // CORS options
@@ -24,8 +25,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(express.json({limit: "16kb"}))
-app.use(express.urlencoded({extended: true, limit: "16kb"}))
+app.use(express.json({ limit: "16kb" }))
+app.use(express.urlencoded({ extended: true, limit: "16kb" }))
 app.use(express.static("public"))
 app.use(cookieParser())
 
