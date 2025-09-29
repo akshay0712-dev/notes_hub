@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: biometric-backend
+    env: node
+    plan: free
+    branch: main
+    rootDir: Backend
+    buildCommand: npm install
+    startCommand: node --experimental-json-modules src/index.js
+    envVars:
+      - key: PORT
+        value: ${PORT}
+
+      - key: MONGODB_URI
+        value: ${MONGODB_URI}
+
+      - key: CORS_ORIGIN
+        value: ${CORS_ORIGIN}
+
+      - key: ACCESS_TOKEN_SECRET
+        value: ${ACCESS_TOKEN_SECRET}
+
+      - key: ACCESS_TOKEN_EXPIRY
+        value: ${ACCESS_TOKEN_EXPIRY}
+
+      - key: REFRESH_TOKEN_SECRET
+        value: ${REFRESH_TOKEN_SECRET}
+
+      - key: REFRESH_TOKEN_EXPIRY
+        value: ${REFRESH_TOKEN_EXPIRY}
+
+      - key: CLOUDINARY_CLOUD_NAME
+        value: ${CLOUDINARY_CLOUD_NAME}
+
+      - key: CLOUDINARY_API_KEY
+        value: ${CLOUDINARY_API_KEY}
+
+      - key: CLOUDINARY_API_SECRET
+        value: ${CLOUDINARY_API_SECRET}
