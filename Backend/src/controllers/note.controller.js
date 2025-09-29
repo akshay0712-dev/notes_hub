@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 import { Note } from "../models/note.model.js";
-import { uploadOnFirebase } from "../utils/firebase.js";
+// import { uploadOnFirebase } from "../utils/firebase.js";
 
 const uploadNotes = asyncHandler(async (req, res) => {
 
@@ -36,7 +36,7 @@ const uploadNotes = asyncHandler(async (req, res) => {
   }
 
   // Upload to Cloudinary
-  const uploadedFile = await uploadOnFirebase(noteFile.path);
+  const uploadedFile = await uploadOnCloudinary(noteFile.path);
   if (!uploadedFile) {
     throw new ApiError(400, "File upload failed");
   }
@@ -91,7 +91,7 @@ const updateNote = asyncHandler(async (req, res) => {
   let fileUrl = note.fileUrl;
   let fileType = note.fileType;
   if (req.files?.noteFile?.[0]?.path) {
-    const uploadedFile = await uploadOnFirebase(req.files.noteFile[0].path);
+    const uploadedFile = await uploadOnCloudinary(req.files.noteFile[0].path);
     fileUrl = uploadedFile.secure_url;
     fileType = uploadedFile.resource_type === "image" ? "image" : "pdf";
   }
