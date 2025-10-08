@@ -101,7 +101,7 @@ export const loginAdmin = asyncHandler(async (req, res) => {
 export const logoutAdmin = asyncHandler(async (req, res) => {
     await Admin.findByIdAndUpdate(req.admin._id, { $unset: { refreshToken: 1 } }, { new: true });
 
-    const options = { httpOnly: true, secure: true };
+    const options = { httpOnly: true, secure: true, sameSite: "None", };
 
     return res.status(200)
         .clearCookie("accessToken", options)
