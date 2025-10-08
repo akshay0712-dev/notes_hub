@@ -28,11 +28,13 @@ const Navbar = () => {
     const handleAdminClick = async () => {
         if (isAdminLoggedIn) {
             try {
-                await axios.post(
-                    `${import.meta.env.VITE_API_BASE}/admin/logout`,
-                    {},
-                    { withCredentials: true }
-                );
+                console.log("Attempting to log out admin...");
+                
+                // await axios.post(
+                //     `${import.meta.env.VITE_API_BASE}/admin/logout`,
+                //     {},
+                //     { withCredentials: true }
+                // );
                 // Clear stored tokens
                 ["accessToken", "refreshToken", "user"].forEach((key) =>
                     localStorage.removeItem(key)
