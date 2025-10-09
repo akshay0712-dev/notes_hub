@@ -90,6 +90,8 @@ export default function Notes() {
   }, [notes, selectedBranch, selectedCategory, fileFilter, searchQ]);
 
   const handleView = (url, type) => {
+    // console.log(url);
+    
     setFileUrl(url);
     setIsImage(type === "image" || isImageFile(url));
     setIsOpen(true);

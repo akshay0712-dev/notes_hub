@@ -3,13 +3,21 @@ import { Dialog } from "@headlessui/react";
 
 const PDFModal = ({ isOpen, onClose, fileUrl, isImage }) => {
   const [absoluteUrl, setAbsoluteUrl] = useState("");
+  // console.log(`loging in model url: ${fileUrl} isOpen: ${isOpen} osImage: ${isImage}`);
+
 
   useEffect(() => {
     if (fileUrl) {
-      // Always use an absolute URL for PDFs
-      setAbsoluteUrl(`${window.location.origin}${fileUrl}`);
+      // If it's already an absolute URL (e.g. starts with http or https), use it as-is
+      if (/^https?:\/\//i.test(fileUrl)) {
+        setAbsoluteUrl(fileUrl);
+      } else {
+        setAbsoluteUrl(`${window.location.origin}${fileUrl}`);
+      }
+      // console.log(`Set absoluteUrl to: ${fileUrl}`);
     }
   }, [fileUrl]);
+
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
