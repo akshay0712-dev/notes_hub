@@ -5,12 +5,15 @@ import PDFModal from "./PDFModal";
 import axios from "axios";
 
 const categories = [
-  "All",
   "Maths",
   "Python",
   "Web Development",
   "English",
   "Chemistry",
+  "Physics",
+  "Basic Electronics",
+  "Basic Electrical",
+  "EGD",
 ];
 
 const branches = [
@@ -147,11 +150,10 @@ export default function Notes() {
             <button
               key={b}
               onClick={() => setSelectedBranch(b)}
-              className={`px-3 py-1.5 rounded-full text-sm ${
-                selectedBranch === b
+              className={`px-3 py-1.5 rounded-full text-sm ${selectedBranch === b
                   ? "bg-blue-600 text-white"
                   : "bg-white border border-gray-200 hover:bg-blue-50"
-              }`}
+                }`}
             >
               {b}
             </button>
@@ -162,11 +164,10 @@ export default function Notes() {
             <button
               key={c}
               onClick={() => setSelectedCategory(c)}
-              className={`px-3 py-1.5 rounded-full text-sm ${
-                selectedCategory === c
+              className={`px-3 py-1.5 rounded-full text-sm ${selectedCategory === c
                   ? "bg-indigo-600 text-white"
                   : "bg-white border border-gray-200 hover:bg-indigo-50"
-              }`}
+                }`}
             >
               {c}
             </button>

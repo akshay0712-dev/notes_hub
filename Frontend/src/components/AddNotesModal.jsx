@@ -10,6 +10,10 @@ const categories = [
     "Web Development",
     "English",
     "Chemistry",
+    "Physics",
+    "Basic Electronics",
+    "Basic Electrical",
+    "EGD",
 ];
 
 const branches = [
@@ -190,7 +194,7 @@ const AddNotesModal = ({ isOpen, onClose }) => {
                             id="noteFile"
                             name="noteFile"
                             type="file"
-                            accept=".jpg,.png,.pdf,.doc,.docx,.txt"
+                            accept=".jpg,.png"
                             onChange={handleChange}
                             required
                             className="hidden"
