@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MdNoteAdd, MdClose, MdUploadFile } from 'react-icons/md';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 // Categories and Branches
@@ -16,12 +17,14 @@ const categories = [
     "EGD",
 ];
 
+
 const branches = [
     "CSE", "CSE AI/ML", "Civil", "Mechanical", "Electrical", "ECE"
 ];
 
 const AddNotesModal = ({ isOpen, onClose }) => {
 
+    const navigate = useNavigate();
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -66,12 +69,14 @@ const AddNotesModal = ({ isOpen, onClose }) => {
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
-                        Authorization: `Bearer ${localStorage.getItem("token")}`, // If token is in localStorage
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // If token is in localStorage
                     },
                     withCredentials: true, // If you're using cookies for JWT
                 }
             );
             setMessage("Upload successful!");
+            navigate("/");
+            window.location.reload();
             console.log("Response:", response.data);
         } catch (error) {
             setMessage(error.response?.data?.message || "Upload failed!");

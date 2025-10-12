@@ -28,9 +28,10 @@ const Login = () => {
             );
 
             // Save tokens/user info
-            localStorage.setItem("accessToken", response.data.accessToken);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
-            localStorage.setItem("user", JSON.stringify(response.data.user));
+            localStorage.setItem("accessToken", response.data.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.data.refreshToken);
+            localStorage.setItem("user", JSON.stringify(response.data.data.admin));
+
 
             // Redirect after login
             navigate("/");
