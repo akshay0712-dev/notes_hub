@@ -98,7 +98,7 @@ To get a local copy up and running, follow these simple steps.
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/NOTES2.git
+    git clone https://github.com/akshay0712-dev/notes_hub.git
     ```
 2.  **Backend Setup:**
     -   Navigate to the `Backend` directory:
