@@ -32,7 +32,6 @@ NOTES2 is a full-stack web application that allows users to create, manage, and 
 -   **JSON Web Tokens (JWT):** For secure user authentication.
 -   **Cloudinary:** A cloud-based service for image and video management.
 -   **Multer:** A middleware for handling `multipart/form-data`, used for file uploads.
--   **Firebase Admin SDK:** For interacting with Firebase services from a backend server.
 
 ## Project Structure
 
@@ -92,7 +91,6 @@ To get a local copy up and running, follow these simple steps.
 -   Node.js and npm installed on your machine.
 -   A MongoDB database (local or cloud-based).
 -   A Cloudinary account for image uploads.
--   A Firebase project.
 
 ### Installation & Setup
 
@@ -121,7 +119,6 @@ To get a local copy up and running, follow these simple steps.
         CLOUDINARY_CLOUD_NAME=<your_cloudinary_cloud_name>
         CLOUDINARY_API_KEY=<your_cloudinary_api_key>
         CLOUDINARY_API_SECRET=<your_cloudinary_api_secret>
-        FIREBASE_SERVICE_ACCOUNT_KEY_PATH=<path_to_your_firebase_service_account_key>
         ```
     -   Start the backend server:
         ```sh

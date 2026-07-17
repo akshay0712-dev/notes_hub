@@ -1,14 +1,13 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js"
-import { uploadOnCloudinary } from "../utils/cloudinary.js"
+import { ApiError } from "../utils/ApiError.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { uploadOnSupabase } from "../utils/supabase.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { Note } from "../models/note.model.js";
-// import { uploadOnFirebase } from "../utils/firebase.js";
 
 const uploadNotes = asyncHandler(async (req, res) => {
-
   //get notes data from frontend
   // validate - data fields not empty
   // upload on cloudnary
@@ -16,18 +15,17 @@ const uploadNotes = asyncHandler(async (req, res) => {
   // check for note creation success
   // return response
 
-  const { title, subject, branch, description } = req.body
+  const { title, subject, branch, description } = req.body;
+
 
   if (
-    [title, subject, branch, description].some((field) => field?.trim() === "")
+    [title, subject, branch].some((field) => field?.trim() === "")
   ) {
-    throw new ApiError(400, "All fields are required")
+    throw new ApiError(400, "Title, Subject and Branch are required");
   }
 
   console.log("REQ BODY:", req.body);
   console.log("REQ FILE:", req.files?.noteFile?.[0]);
-
-
 
   // Check file
   const noteFile = req.files?.noteFile?.[0];
@@ -36,11 +34,21 @@ const uploadNotes = asyncHandler(async (req, res) => {
   }
 
   // Upload to Cloudinary
-  const uploadedFile = await uploadOnCloudinary(noteFile.path);
+  // const uploadedFile = await uploadOnCloudinary(noteFile.path);
+  const uploadedFile = await uploadOnSupabase(
+    noteFile.path,
+    `notes/${Date.now()}-${noteFile.originalname}`,
+    noteFile.mimetype
+  );
+
+
+
   if (!uploadedFile) {
     throw new ApiError(400, "File upload failed");
   }
-  const fileType = uploadedFile.resource_type === "image" ? "image" : "pdf"
+  // const fileType = uploadedFile.resource_type === "image" ? "image" : "pdf";
+
+  const fileType = noteFile.mimetype.startsWith("image") ? "image" : "pdf";
 
   const newNote = await Note.create({
     title,
@@ -48,25 +56,25 @@ const uploadNotes = asyncHandler(async (req, res) => {
     branch,
     description,
     fileUrl: uploadedFile.secure_url,
-    fileType
-  })
+    fileType,
+  });
 
-  const createdNote = await Note.findById(newNote._id)
+  const createdNote = await Note.findById(newNote._id);
 
   if (!createdNote) {
-    throw new ApiError(500, "Something went wrong while creating notes")
+    throw new ApiError(500, "Something went wrong while creating notes");
   }
 
-  return res.status(201).json(
-    new ApiResponse(200, createdNote, "Notes created Successfully")
-  )
-})
-
+  return res
+    .status(201)
+    .json(new ApiResponse(200, createdNote, "Notes created Successfully"));
+});
 
 // 📄 Get Single Note
 const getNoteById = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(400, "Invalid Note ID");
+  if (!mongoose.Types.ObjectId.isValid(id))
+    throw new ApiError(400, "Invalid Note ID");
 
   const note = await Note.findById(id);
   if (!note) throw new ApiError(404, "Note not found");
@@ -79,11 +87,13 @@ const updateNote = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { title, subject, branch, description } = req.body;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(400, "Invalid Note ID");
+  if (!mongoose.Types.ObjectId.isValid(id))
+    throw new ApiError(400, "Invalid Note ID");
 
   const note = await Note.findById(id);
-  if (!note) { throw new ApiError(404, "Note not found") }
-  else {
+  if (!note) {
+    throw new ApiError(404, "Note not found");
+  } else {
     console.log("Note found:", note);
   }
 
@@ -110,7 +120,8 @@ const updateNote = asyncHandler(async (req, res) => {
 // 🗑️ Delete Note
 const deleteNote = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(400, "Invalid Note ID");
+  if (!mongoose.Types.ObjectId.isValid(id))
+    throw new ApiError(400, "Invalid Note ID");
 
   const note = await Note.findByIdAndDelete(id);
   if (!note) throw new ApiError(404, "Note not found");
@@ -137,14 +148,7 @@ const getNotes = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, notes, "Notes fetched successfully"));
 });
 
-export {
-  uploadNotes,
-  getNoteById,
-  updateNote,
-  deleteNote,
-  getNotes
-};
-
+export { uploadNotes, getNoteById, updateNote, deleteNote, getNotes };
 
 // /api/notes?branch=CSE → Filters by branch
 // /api/notes?subject=Maths → Filters by subject
