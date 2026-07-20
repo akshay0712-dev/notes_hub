@@ -1,4 +1,4 @@
-import { supabase } from "../config/supabase";
+import { supabase } from "../config/supabase.js";
 import fs from "fs";
 
 const uploadOnSupabase = async (localFilePath, fileName, contentType) => {
