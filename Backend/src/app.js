@@ -9,7 +9,8 @@ const app = express()
 const allowedOrigins = [
   "http://localhost:5174",
   "http://localhost:5173",
-  "https://notes-hub-inky.vercel.app"
+  "https://notes-hub-inky.vercel.app",
+  "https://notes.akshay-dev.in"
 ];
 
 // CORS options
