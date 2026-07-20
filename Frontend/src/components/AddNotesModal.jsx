@@ -5,15 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 // Categories and Branches
 const categories = [
-  "Maths",
-  "Python",
-  "Web Development",
-  "English",
-  "Chemistry",
-  "Physics",
-  "Basic Electronics",
-  "Basic Electrical",
-  "EGD",
+  "DBMS",
+  "CN",
+  "FLAT",
+  "COA",
+  "ETC",
+  "DAA"
 ];
 
 const branches = [
@@ -242,7 +239,7 @@ const AddNotesModal = ({ isOpen, onClose }) => {
               name="noteFile"
               type="file"
               multiple
-              accept=".jpg,.png,.pdf"
+              accept="*/*"
               onChange={handleChange}
               required
               className="hidden"

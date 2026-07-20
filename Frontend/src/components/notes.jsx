@@ -5,15 +5,12 @@ import PDFModal from "./PDFModal";
 import axios from "axios";
 
 const categories = [
-  "Maths",
-  "Python",
-  "Web Development",
-  "English",
-  "Chemistry",
-  "Physics",
-  "Basic Electronics",
-  "Basic Electrical",
-  "EGD",
+  "DBMS",
+  "CN",
+  "FLAT",
+  "COA",
+  "ETC",
+  "DAA"
 ];
 
 const branches = [
